@@ -2271,7 +2271,7 @@
       let lbCurrent    = 0;
 
       /* ── Pagination ── */
-      function showPage(page) {
+      function showPage(page, scroll) {
         currentPage = Math.max(1, Math.min(page, totalPages));
         const start = (currentPage - 1) * PER_PAGE;
         const end   = start + PER_PAGE;
@@ -2279,7 +2279,8 @@
           item.style.display = (i >= start && i < end) ? '' : 'none';
         });
         buildPagination();
-        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        /* Only scroll when the user clicks a page button, not on initial load */
+        if (scroll) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
       function buildPagination() {
@@ -2289,14 +2290,14 @@
         prev.className = 'gal-page-btn arrow';
         prev.textContent = '←';
         prev.disabled = currentPage === 1;
-        prev.addEventListener('click', () => showPage(currentPage - 1));
+        prev.addEventListener('click', () => showPage(currentPage - 1, true));
         pagination.appendChild(prev);
 
         for (let p = 1; p <= totalPages; p++) {
           const btn = document.createElement('button');
           btn.className = 'gal-page-btn' + (p === currentPage ? ' active' : '');
           btn.textContent = p;
-          btn.addEventListener('click', () => showPage(p));
+          btn.addEventListener('click', () => showPage(p, true));
           pagination.appendChild(btn);
         }
 
@@ -2309,11 +2310,11 @@
         next.className = 'gal-page-btn arrow';
         next.textContent = '→';
         next.disabled = currentPage === totalPages;
-        next.addEventListener('click', () => showPage(currentPage + 1));
+        next.addEventListener('click', () => showPage(currentPage + 1, true));
         pagination.appendChild(next);
       }
 
-      /* Init — show page 1 */
+      /* Init — show page 1 WITHOUT scrolling (page just loaded) */
       showPage(1);
 
       /* ── Lightbox ── */
