@@ -1,0 +1,2517 @@
+<!-- HTML Structure: head, body, CSS, JS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Night on the Galactic Railroad — A Celestial Journey</title>
+  <meta name="description" content="An immersive showcase for the 1985 anime film Night on the Galactic Railroad, based on Kenji Miyazawa's classic novel. Explore the story, characters, and the dreamlike galaxy journey of Giovanni and Campanella." />
+
+  <!-- Google Fonts: Cinzel for display, Lora for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <!-- CSS Styles -->
+  <style>
+    /* --- 1. Custom Properties --- */
+    :root {
+      --midnight:   #13112A;   /* deep midnight navy */
+      --deep-navy:  #1E1C3A;   /* slightly lighter navy */
+      --galactic:   #5B52A3;   /* muted violet / galactic purple */
+      --crimson:    #C93261;   /* vivid crimson rose */
+      --stardust:   #F5D060;   /* warm golden stardust */
+      --mist:       #EEEDF3;   /* pale silver mist */
+      --periwinkle: #9DA4CF;   /* soft periwinkle blue */
+
+      /* Complementary accents */
+      --nebula:     #2A1F5E;   /* deeper purple nebula for depth */
+      --comet:      #7B70C8;   /* lighter violet comet */
+      --aurora:     #E8719A;   /* lighter crimson aurora */
+
+      /* Semantic tokens */
+      --bg:         var(--midnight);
+      --surface:    var(--deep-navy);
+      --text:       var(--mist);
+      --accent:     var(--stardust);
+      --link:       var(--periwinkle);
+      --highlight:  var(--crimson);
+
+      /* Typography */
+      --font-display: 'Cinzel', serif;
+      --font-body:    'Lora', serif;
+
+      /* Spacing */
+      --section-gap: clamp(4rem, 8vw, 7rem);
+    }
+
+    /* --- 2. Reset & Base --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* --- 3. Star Canvas --- */
+    #star-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* --- 4. Scrollbar --- */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--midnight); }
+    ::-webkit-scrollbar-thumb { background: var(--galactic); border-radius: 3px; }
+
+    /* --- 5. Utility --- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 5vw, 2.5rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--stardust);
+      margin-bottom: 0.6rem;
+    }
+
+    a { color: var(--link); text-decoration: none; transition: color 0.25s; }
+    a:hover { color: var(--stardust); }
+
+    /* --- 6. Header --- */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: clamp(5rem, 18vh, 10rem) 0 clamp(3rem, 8vh, 6rem);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%,
+        rgba(91,82,163,0.35) 0%,
+        rgba(201,50,97,0.1) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-eyebrow {
+      font-family: var(--font-display);
+      font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+      letter-spacing: 0.5em;
+      color: var(--periwinkle);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--mist);
+      text-shadow:
+        0 0 60px rgba(245,208,96,0.3),
+        0 0 120px rgba(91,82,163,0.4);
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+    }
+
+    header h1 span {
+      display: block;
+      color: var(--stardust);
+    }
+
+    .header-sub {
+      margin-top: 1.2rem;
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      color: var(--periwinkle);
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+
+    .header-divider {
+      margin: 2.5rem auto 0;
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--stardust), transparent);
+      opacity: 0;
+      animation: fadeUp 1s 1.1s forwards;
+    }
+
+    /* --- 7. Nav --- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(19,17,42,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(91,82,163,0.25);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem clamp(1rem, 5vw, 2.5rem);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--stardust);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0; right: 0;
+      height: 1px;
+      background: var(--stardust);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--stardust); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* --- 8. Main & Sections --- */
+    main { position: relative; z-index: 1; }
+
+    /* ── Section shell ── */
+    section {
+      padding: var(--section-gap) 0;
+      position: relative;
+    }
+
+    section + section {
+      border-top: 1px solid rgba(91,82,163,0.15);
+    }
+
+    /* --- 9. Typography --- */
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.6rem);
+      font-weight: 600;
+      color: var(--mist);
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 600;
+      color: var(--stardust);
+      margin-bottom: 0.5rem;
+    }
+
+    p { margin-bottom: 1rem; color: rgba(238,237,243,0.85); }
+    p:last-child { margin-bottom: 0; }
+
+    /* --- 10. Overview Section --- */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 340px;
+      gap: 2.5rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .overview-grid { grid-template-columns: 1fr 1fr; }
+      .overview-cover { grid-column: 1 / -1; display: flex; justify-content: center; }
+    }
+
+    @media (max-width: 600px) {
+      .overview-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Movie cover */
+    .overview-cover {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .overview-cover img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid rgba(91,82,163,0.4);
+      box-shadow: 0 8px 40px rgba(91,82,163,0.35), 0 0 0 1px rgba(245,208,96,0.1);
+      display: block;
+      transition: box-shadow 0.3s;
+    }
+
+    .overview-cover img:hover {
+      box-shadow: 0 12px 50px rgba(91,82,163,0.5), 0 0 0 2px rgba(245,208,96,0.25);
+    }
+
+    .overview-cover-fallback {
+      width: 100%;
+      aspect-ratio: 2/3;
+      background: linear-gradient(160deg, var(--nebula), var(--deep-navy));
+      border-radius: 10px;
+      border: 2px solid rgba(91,82,163,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--periwinkle);
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .overview-cover-fallback span { font-size: 3rem; }
+
+    /* --- 11. Aside --- */
+    aside {
+      background: rgba(30,28,58,0.7);
+      border: 1px solid rgba(91,82,163,0.3);
+      border-radius: 12px;
+      padding: 1.8rem;
+      backdrop-filter: blur(8px);
+    }
+
+    aside h3 { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.2rem; color: var(--periwinkle); }
+
+    /* --- 12. Definition List --- */
+    /* Definition list */
+    dl { display: grid; gap: 0.7rem; }
+
+    dt {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stardust);
+      margin-bottom: 0.1rem;
+    }
+
+    dd {
+      color: var(--mist);
+      font-size: 0.92rem;
+      padding-left: 0;
+      margin-left: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    /* --- 13. Decorative HR --- */
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(91,82,163,0.5), var(--stardust), rgba(91,82,163,0.5), transparent);
+      margin: 2.5rem 0;
+    }
+
+    /* --- 14. Inline Elements --- */
+    strong { color: var(--stardust); font-weight: 600; }
+    em { color: var(--aurora); font-style: italic; }
+    mark {
+      background: rgba(245,208,96,0.2);
+      color: var(--stardust);
+      border-radius: 3px;
+      padding: 0 3px;
+    }
+    abbr {
+      text-decoration: underline dotted rgba(157,164,207,0.6);
+      cursor: help;
+    }
+
+    /* --- 15. Blockquote --- */
+    blockquote {
+      position: relative;
+      margin: 2.5rem 0;
+      padding: 2rem 2rem 2rem 3.5rem;
+      background: rgba(91,82,163,0.12);
+      border-left: 3px solid var(--crimson);
+      border-radius: 0 10px 10px 0;
+    }
+
+    blockquote::before {
+      content: '\201C';
+      position: absolute;
+      left: 0.8rem;
+      top: 0.6rem;
+      font-size: 3.5rem;
+      color: var(--crimson);
+      font-family: Georgia, serif;
+      line-height: 1;
+      opacity: 0.7;
+    }
+
+    blockquote p {
+      font-size: 1.08rem;
+      font-style: italic;
+      color: var(--mist);
+      margin-bottom: 0.6rem;
+    }
+
+    blockquote cite {
+      font-size: 0.82rem;
+      color: var(--periwinkle);
+      letter-spacing: 0.1em;
+    }
+
+    /* --- 16. Lists --- */
+    ol, ul {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+      color: rgba(238,237,243,0.85);
+    }
+
+    ol { counter-reset: item; list-style: none; padding-left: 0; }
+    ol li {
+      counter-increment: item;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.7rem;
+      align-items: baseline;
+    }
+    ol li::before {
+      content: counter(item, decimal-leading-zero);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      color: var(--crimson);
+      letter-spacing: 0.05em;
+      min-width: 2rem;
+    }
+
+    ul { list-style: none; padding-left: 0; }
+    ul li {
+      padding-left: 1.4rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    ul li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--stardust);
+      font-size: 0.6rem;
+      top: 0.35em;
+    }
+
+    /* --- 17. Show More/Less Toggle --- */
+    .more-content { display: none; }
+    .more-content.visible { display: block; }
+
+    .btn-toggle {
+      background: transparent;
+      border: 1px solid rgba(91,82,163,0.5);
+      color: var(--periwinkle);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      cursor: pointer;
+      margin-top: 1.2rem;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .btn-toggle:hover {
+      background: rgba(91,82,163,0.2);
+      color: var(--stardust);
+      border-color: var(--stardust);
+    }
+
+    /* --- 18. Characters Section --- */
+
+    /* Tab buttons for character groups */
+    .char-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 1.5rem;
+    }
+
+    .char-tab-btn {
+      background: transparent;
+      border: 1px solid rgba(91,82,163,0.4);
+      color: var(--periwinkle);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .char-tab-btn:hover {
+      background: rgba(91,82,163,0.15);
+      color: var(--stardust);
+      border-color: var(--stardust);
+    }
+
+    .char-tab-btn.active {
+      background: rgba(91,82,163,0.25);
+      color: var(--stardust);
+      border-color: var(--stardust);
+    }
+
+    /* Character group panels */
+    .char-group { display: none; }
+    .char-group.active { display: block; }
+
+    /* Character list */
+    .char-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Individual character row */
+    .char-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      background: rgba(30,28,58,0.65);
+      border: 1px solid rgba(91,82,163,0.2);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+
+    .char-row:hover {
+      background: rgba(42,31,94,0.6);
+      border-color: rgba(245,208,96,0.3);
+      transform: translateX(4px);
+    }
+
+    /* Thumbnail — small portrait */
+    .char-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid rgba(91,82,163,0.4);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: linear-gradient(160deg, var(--nebula), var(--deep-navy));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      transition: border-color 0.25s;
+    }
+
+    .char-row:hover .char-thumb {
+      border-color: var(--stardust);
+    }
+
+    .char-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Name + role + description */
+    .char-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .char-info-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+
+    .char-info h3 {
+      font-size: 1rem;
+      color: var(--mist);
+      margin: 0;
+    }
+
+    .char-role-badge {
+      font-family: var(--font-display);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+      background: rgba(91,82,163,0.2);
+      border: 1px solid rgba(91,82,163,0.3);
+      border-radius: 20px;
+      padding: 0.15rem 0.55rem;
+    }
+
+    .char-desc {
+      font-size: 0.83rem;
+      color: rgba(238,237,243,0.7);
+      margin: 0 0 0.2rem;
+      line-height: 1.55;
+    }
+
+    .char-va-line {
+      font-size: 0.72rem;
+      color: rgba(245,208,96,0.55);
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+    }
+
+    /* Expand arrow */
+    .char-row-arrow {
+      color: var(--periwinkle);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+
+    .char-row:hover .char-row-arrow { color: var(--stardust); }
+
+    /* Character image modal */
+    .char-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13,11,30,0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .char-modal-overlay.open { display: flex; }
+
+    .char-modal-box {
+      background: linear-gradient(145deg, var(--deep-navy), var(--nebula));
+      border: 1px solid rgba(91,82,163,0.4);
+      border-radius: 18px;
+      max-width: 420px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      animation: scaleIn 0.3s ease;
+    }
+
+    .char-modal-img-wrap {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .char-modal-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .char-modal-img-fallback {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, var(--nebula), var(--deep-navy));
+    }
+
+    .char-modal-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(transparent, var(--nebula));
+    }
+
+    .char-modal-body {
+      padding: 1.4rem 1.8rem 1.8rem;
+    }
+
+    .char-modal-body h3 {
+      font-size: 1.25rem;
+      color: var(--stardust);
+      margin-bottom: 0.3rem;
+    }
+
+    .char-modal-role {
+      font-size: 0.75rem;
+      color: var(--periwinkle);
+      font-family: var(--font-display);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .char-modal-va {
+      font-size: 0.75rem;
+      color: rgba(245,208,96,0.7);
+      font-family: var(--font-display);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+
+    .char-modal-va span {
+      opacity: 0.55;
+      margin-right: 0.3rem;
+    }
+
+    .char-modal-body p {
+      font-size: 0.88rem;
+      color: rgba(238,237,243,0.85);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .char-modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(19,17,42,0.7);
+      border: none;
+      color: var(--mist);
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .char-modal-close:hover { background: var(--crimson); }
+
+    /* --- 19. Gallery Section ---
+       5-column image grid. No text labels — pure pictures.
+       Each .gal-item is a square tile that zooms slightly on hover.
+       Clicking opens the full image in a lightbox (see lightbox styles below).
+    ---------------------------------------------------------------- */
+    #gallery {
+      background: rgba(30,28,58,0.3);
+    }
+
+    /* 5 equal columns; drops to 3 on tablet, 2 on mobile */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Each tile: square aspect ratio, overflow hidden for zoom */
+    .gal-item {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      cursor: zoom-in;
+      border-radius: 6px;
+      background: var(--deep-navy);
+      border: 1px solid rgba(91,82,163,0.2);
+      position: relative;
+    }
+
+    .gal-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease, opacity 0.25s;
+    }
+
+    /* Subtle hover zoom + brightness lift */
+    .gal-item:hover img {
+      transform: scale(1.08);
+    }
+
+    /* Purple overlay shimmer on hover */
+    .gal-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(91,82,163,0);
+      transition: background 0.3s;
+      pointer-events: none;
+    }
+
+    .gal-item:hover::after {
+      background: rgba(91,82,163,0.18);
+    }
+
+    /* ── LIGHTBOX ──────────────────────────────────────────────
+       Full-screen overlay that shows the clicked image at full size.
+       Closed by clicking the backdrop, the × button, or Escape.
+    ----------------------------------------------------------- */
+
+    /* Backdrop — hidden by default, shown with .open class */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10, 8, 28, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox-overlay.open {
+      display: flex;
+    }
+
+    /* The enlarged image — max 90% of the viewport in either direction */
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 0 80px rgba(91,82,163,0.5);
+      animation: lbFadeIn 0.25s ease;
+      cursor: default;
+    }
+
+    @keyframes lbFadeIn {
+      from { opacity: 0; transform: scale(0.94); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Close button — top-right corner */
+    .lightbox-close {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: rgba(91,82,163,0.45);
+      border: 1px solid rgba(91,82,163,0.5);
+      color: var(--mist);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 1000;
+    }
+
+    .lightbox-close:hover {
+      background: var(--crimson);
+      border-color: var(--crimson);
+    }
+
+    /* Prev / Next arrow buttons */
+    .lightbox-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(91,82,163,0.35);
+      border: 1px solid rgba(91,82,163,0.45);
+      color: var(--mist);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 1000;
+    }
+
+    .lightbox-arrow:hover { background: rgba(91,82,163,0.7); }
+    .lightbox-arrow.prev  { left: 1.2rem; }
+    .lightbox-arrow.next  { right: 1.2rem; }
+
+    /* Counter label e.g. "3 / 10" */
+    .lightbox-counter {
+      position: fixed;
+      bottom: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: rgba(157,164,207,0.6);
+      z-index: 1000;
+    }
+
+    /* --- 19b. Gallery Pagination --- */
+    .gallery-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .gal-page-btn {
+      background: transparent;
+      border: 1px solid rgba(91,82,163,0.4);
+      color: var(--periwinkle);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gal-page-btn:hover {
+      background: rgba(91,82,163,0.2);
+      border-color: var(--stardust);
+      color: var(--stardust);
+    }
+
+    .gal-page-btn.active {
+      background: rgba(91,82,163,0.3);
+      border-color: var(--stardust);
+      color: var(--stardust);
+    }
+
+    .gal-page-btn.arrow {
+      font-size: 1rem;
+      width: 36px;
+      height: 36px;
+    }
+
+    .gal-page-btn:disabled {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .gal-page-info {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: rgba(157,164,207,0.6);
+      margin: 0 0.4rem;
+    }
+
+    /* --- 20. Badges --- */
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+      margin-right: 0.4rem;
+      margin-top: 0.5rem;
+      font-family: var(--font-display);
+    }
+
+    .badge-genre { background: rgba(91,82,163,0.3); color: var(--comet); border: 1px solid rgba(91,82,163,0.4); }
+    .badge-year  { background: rgba(245,208,96,0.15); color: var(--stardust); border: 1px solid rgba(245,208,96,0.3); }
+    .badge-rating{ background: rgba(201,50,97,0.15); color: var(--aurora); border: 1px solid rgba(201,50,97,0.3); }
+
+    /* --- 21. Lightbox — styles defined in section 19 above --- */
+
+    /* --- 22. Trailer Section --- */
+    /* --- 22. Trailer Section ---
+       The iframe is NOT loaded on page load — only injected into the DOM
+       when the user clicks the play button. This prevents autoplay entirely.
+       A thumbnail image acts as the facade before the user clicks.
+    ---------------------------------------------------------------- */
+    .trailer-wrap {
+      margin-top: 2.5rem;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(91,82,163,0.3);
+      position: relative;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+      cursor: pointer;
+      background: var(--deep-navy);
+    }
+
+    /* Thumbnail image behind the play button */
+    .trailer-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.3s;
+    }
+
+    /* Dark overlay on the thumbnail */
+    .trailer-facade::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(13,11,30,0.45);
+      transition: background 0.3s;
+    }
+
+    .trailer-facade:hover::after {
+      background: rgba(13,11,30,0.25);
+    }
+
+    /* Play button circle */
+    .trailer-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(201,50,97,0.85);
+      border: 3px solid rgba(245,208,96,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+      box-shadow: 0 0 30px rgba(201,50,97,0.5);
+    }
+
+    .trailer-facade:hover .trailer-play-btn {
+      transform: translate(-50%, -50%) scale(1.12);
+      background: var(--crimson);
+      box-shadow: 0 0 50px rgba(201,50,97,0.7);
+    }
+
+    /* Triangle "play" icon */
+    .trailer-play-btn::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-top:    12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left:   20px solid #fff;
+      margin-left: 4px; /* optical center */
+    }
+
+    /* Label below the play button */
+    .trailer-label {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(238,237,243,0.7);
+      white-space: nowrap;
+    }
+
+    /* Once clicked, the iframe replaces the facade */
+    .trailer-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    #reviews {
+      background: rgba(42,31,94,0.2);
+    }
+
+    .review-form-wrap {
+      background: rgba(30,28,58,0.7);
+      border: 1px solid rgba(91,82,163,0.25);
+      border-radius: 16px;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      margin-top: 2.5rem;
+      max-width: 640px;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    label {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+      margin-bottom: 0.5rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: rgba(19,17,42,0.6);
+      border: 1px solid rgba(91,82,163,0.35);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      color: var(--mist);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--galactic);
+      box-shadow: 0 0 0 3px rgba(91,82,163,0.2);
+    }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    select option { background: var(--deep-navy); }
+
+    /* --- 24. Star Rating Input --- */
+    .star-select { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+
+    .star-option input[type="radio"] { display: none; }
+    .star-option label {
+      font-size: 2rem;
+      cursor: pointer;
+      color: rgba(157,164,207,0.3);
+      transition: color 0.15s, transform 0.15s;
+      letter-spacing: 0;
+      text-transform: none;
+      font-family: inherit;
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+      display: block;
+    }
+
+    .star-option label:hover,
+    .star-option label.active {
+      color: var(--stardust);
+      transform: scale(1.15);
+    }
+
+    /* --- 25. Submit Button --- */
+    .btn-submit {
+      background: linear-gradient(135deg, var(--galactic), var(--crimson));
+      border: none;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.8rem 2.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: opacity 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 4px 20px rgba(201,50,97,0.3);
+    }
+
+    .btn-submit:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,50,97,0.45);
+    }
+
+    /* --- 26. Reviews Display --- */
+    #reviews-list {
+      margin-top: 2.5rem;
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .review-card {
+      background: rgba(30,28,58,0.65);
+      border: 1px solid rgba(91,82,163,0.2);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .reviewer-name {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--stardust);
+      letter-spacing: 0.05em;
+    }
+
+    .review-stars { color: var(--stardust); font-size: 1rem; letter-spacing: 2px; }
+
+    .review-movie-title {
+      font-size: 0.75rem;
+      color: var(--periwinkle);
+      margin-bottom: 0.4rem;
+    }
+
+    .review-text { font-size: 0.9rem; color: rgba(238,237,243,0.8); }
+
+    /* --- 27. Footer --- */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 1rem;
+      border-top: 1px solid rgba(91,82,163,0.2);
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--stardust);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-text {
+      font-size: 0.8rem;
+      color: rgba(157,164,207,0.5);
+      margin: 0;
+    }
+
+    .footer-constellation {
+      font-size: 1.5rem;
+      letter-spacing: 0.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    /* --- 28. Back to Top Button --- */
+    #back-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 200;
+      background: linear-gradient(135deg, var(--galactic), var(--crimson));
+      border: none;
+      color: #fff;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(201,50,97,0.4);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+
+    #back-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    #back-top:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(201,50,97,0.55); }
+
+    /* --- 29. Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* --- 30. Responsive Breakpoints --- */
+    @media (max-width: 600px) {
+      .nav-links { gap: 0.8rem; }
+      .nav-links a { font-size: 0.65rem; letter-spacing: 0.1em; }
+    }
+  </style>
+</head>
+
+<!-- Page Structure: header, nav, main, footer -->
+<body>
+
+  <!-- Star field canvas -->
+  <canvas id="star-canvas"></canvas>
+
+  <!-- Back to Top Button -->
+  <button id="back-top" aria-label="Back to top">↑</button>
+
+  <!-- HEADER -->
+  <header id="home">
+    <div class="container">
+      <p class="header-eyebrow">✦ &nbsp; Kenji Miyazawa &nbsp; ✦ &nbsp; 1985 &nbsp; ✦</p>
+      <h1>
+        Night on the
+        <span>Galactic Railroad</span>
+      </h1>
+      <p class="header-sub">銀河鉄道の夜 &nbsp;·&nbsp; A journey across the stars</p>
+      <div class="header-divider"></div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">✦ Galactic RR</span>
+      <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#story">Story</a></li>
+        <li><a href="#characters">Characters</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#trailer">Trailer</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- ============================================================
+         GROUP 3: TEXT CONTENT + INTERACTIVITY
+         h1-h3, p, ol, ul, blockquote, dl, hr
+         inline: strong, em, mark, abbr
+         JS: show more/less, back to top
+         ============================================================ -->
+
+    <!-- OVERVIEW SECTION -->
+    <section id="overview">
+      <div class="container">
+        <p class="section-label">✦ Overview</p>
+        <h2>About the Film</h2>
+
+        <div class="overview-grid">
+          <!-- Movie Cover -->
+          <div class="overview-cover">
+            <img src="img/cover.png" alt="Night on the Galactic Railroad movie cover"/>
+          </div>
+          <div>
+            <p>
+              <strong>Night on the Galactic Railroad</strong> (<abbr title="Ginga Tetsudō no Yoru">銀河鉄道の夜</abbr>) is a landmark <em>1985 Japanese animated film</em> directed by Gisaburō Sugii, adapted from Kenji Miyazawa's unfinished 1927 novel. The film is celebrated for its <mark>hauntingly poetic atmosphere</mark> and philosophical depth, exploring themes of mortality, friendship, and transcendence.
+            </p>
+            <p>
+              The story follows <strong>Giovanni</strong>, a lonely boy who boards a mysterious train that travels through the cosmos, accompanied by his closest friend <strong>Campanella</strong>. What unfolds is a dreamlike odyssey through celestial landscapes, filled with allegory and quiet sorrow.
+            </p>
+
+            <blockquote>
+              <p>Real happiness, I think, is when both you and everyone around you are searching together for what is truly good — for all of the universe.</p>
+              <cite>— Campanella, Night on the Galactic Railroad</cite>
+            </blockquote>
+
+            <hr />
+
+            <!-- SHOW MORE / LESS SECTION -->
+            <h3>Plot</h3>
+            <p>
+              In a quiet town reminiscent of <em>Meiji-era Japan</em>, <strong>Giovanni</strong> is a poor, lonely boy who works nights at a printing shop to support his ailing mother. On the night of the <mark>Festival of the Stars</mark>, while his classmates celebrate, Giovanni falls asleep alone on a hilltop — and awakens aboard a mysterious train hurtling through the Milky Way.
+            </p>
+
+            <div class="more-content" id="theme-more">
+              <p>
+                Beside him sits his closest friend, <strong>Campanella</strong>. Together they travel through breathtaking cosmic landscapes — past glowing nebulae, star-filled rivers, and celestial stations — gathering passengers who each carry their own quiet grief or peace. Among them are two orphaned siblings from a sunken ship, a jovial bird catcher, and a gentle teacher guiding her young charges onward.
+              </p>
+              <p>
+                As the journey deepens, Giovanni senses something is wrong. At the <em>Southern Cross</em> station, Campanella quietly departs — and Giovanni awakens alone on the hilltop. Returning to town, he learns that Campanella drowned in the river earlier that evening, having jumped in to save a classmate. The dream was real: he had been traveling with his friend's departing soul.
+              </p>
+            </div>
+
+            <button class="btn-toggle" id="toggle-themes">Show More ↓</button>
+          </div>
+
+          <!-- ASIDE: Film Info -->
+          <aside>
+            <h3>Film Details</h3>
+            <dl>
+              <dt>Director</dt>
+              <dd>Gisaburō Sugii</dd>
+
+              <dt>Studio</dt>
+              <dd>Group TAC</dd>
+
+              <dt>Release</dt>
+              <dd>July 13, 1985</dd>
+
+              <dt>Runtime</dt>
+              <dd>107 minutes</dd>
+
+              <dt>Based on</dt>
+              <dd>Novel by Kenji Miyazawa (1927)</dd>
+
+              <dt>Music</dt>
+              <dd>Haruomi Hosono</dd>
+
+              <dt>Country</dt>
+              <dd>Japan</dd>
+
+              <dt>Language</dt>
+              <dd>Japanese</dd>
+            </dl>
+
+            <hr />
+
+            <h3>Related Films</h3>
+            <ul>
+              <li>Grave of the Fireflies (1988)</li>
+              <li>The Tale of Princess Kaguya (2013)</li>
+              <li>Giovanni's Island (2014)</li>
+              <li>Belladonna of Sadness (1973)</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY SECTION -->
+    <section id="story">
+      <div class="container">
+        <p class="section-label">✦ The Journey</p>
+        <h2>Story &amp; Themes</h2>
+
+        <p>
+          In a small town reminiscent of the <em>Meiji-era</em> countryside, Giovanni lives in poverty, working nights at a print shop while his classmates celebrate the <strong>Festival of the Stars</strong>. Lonely and ostracized, he falls asleep on a hilltop and awakens on a mysterious train streaking across the Milky Way.
+        </p>
+
+        <h3>Key Story Beats</h3>
+        <ol>
+          <li>Giovanni discovers himself aboard the Galactic Railroad with Campanella as his companion.</li>
+          <li>The train passes the <mark>Eagle Nebula</mark> station, where passengers reflect on their earthly lives.</li>
+          <li>They encounter the young Zanelli siblings, passengers of a sunken ship finding peace in transit.</li>
+          <li>Campanella reveals he jumped into the river to save a classmate — and did not survive.</li>
+          <li>At the Southern Cross, Campanella quietly departs, leaving Giovanni alone to return home.</li>
+          <li>Giovanni awakens to learn Campanella has drowned, and understands the true nature of their journey.</li>
+        </ol>
+
+        <hr />
+
+        <h3>Awards &amp; Critical Reception</h3>
+        <ul>
+          <li>Widely regarded as one of the <strong>greatest Japanese animated films</strong> of all time</li>
+          <li>Praised for its <em>philosophical depth</em> and rare emotional maturity in animation</li>
+          <li>Director Hayao Miyazaki cited the film as a major influence on his own work</li>
+          <li>Screened at international film festivals and retrospectives for decades after release</li>
+          <li>The film's score by <strong>Haruomi Hosono</strong> is considered a landmark of ambient film music</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Characters Section -->
+    <section id="characters">
+      <div class="container">
+        <p class="section-label">✦ Characters</p>
+        <h2>The Passengers</h2>
+        <p>Each soul aboard the Galactic Railroad carries a story — of love, sacrifice, and the quiet courage of letting go. Click any character to see them up close.</p>
+
+        <div class="char-tabs">
+          <button class="char-tab-btn active" data-group="main">Main Characters</button>
+          <button class="char-tab-btn" data-group="townspeople">Townspeople</button>
+          <button class="char-tab-btn" data-group="passengers">Passengers</button>
+        </div>
+
+        <!-- ── Main Characters ── -->
+        <div class="char-group active" id="group-main">
+          <div class="char-list">
+
+            <div class="char-row" data-img="img/giovanni.jpg" data-icon="🌟"
+                 data-name="Giovanni" data-role="Protagonist" data-va="Mayumi Tanaka"
+                 data-desc="The introspective protagonist, working nights at a printing shop to support his ailing mother while yearning for connection. His journey across the cosmos is one of awakening — learning that true happiness lies in giving, not receiving.">
+              <div class="char-thumb">
+                <img src="img/giovanni.jpg" alt="Giovanni" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Giovanni</h3>
+                  <span class="char-role-badge">Protagonist</span>
+                </div>
+                <p class="char-desc">A lonely, introspective boy who boards the Galactic Railroad, yearning for connection and truth.</p>
+                <p class="char-va-line">VA: Mayumi Tanaka</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/campanella.jpg" data-icon="🌙"
+                 data-name="Campanella" data-role="Giovanni's Best Friend" data-va="Chika Sakamoto"
+                 data-desc="Giovanni's dearest friend, whose quiet sacrifice defines the film's emotional core. Gentle and warm, he embodies selfless love — the kind that transcends even death. His departure at the Southern Cross is the film's most devastating moment.">
+              <div class="char-thumb">
+                <img src="img/campanella.jpg" alt="Campanella" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Campanella</h3>
+                  <span class="char-role-badge">Giovanni's Best Friend</span>
+                </div>
+                <p class="char-desc">Giovanni's closest friend, whose gentle warmth and selfless love define the film's emotional core.</p>
+                <p class="char-va-line">VA: Chika Sakamoto</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Townspeople ── -->
+        <div class="char-group" id="group-townspeople">
+          <div class="char-list">
+
+            <div class="char-row" data-img="img/teacher.jpg" data-icon="🌸"
+                 data-name="The Teacher (Cartographer)" data-role="Teacher / Scientist (Cartographer)" data-va="Ryūnosuke Kaneda"
+                 data-desc="A thoughtful teacher who guides Giovanni and Campanella through lessons about the stars and the structure of the universe. As a celestial cartographer mapping the Milky Way, he represents knowledge without clear answers—a gentle presence that encourages wonder, reminding them that some truths are not meant to be fully understood, only felt.">
+              <div class="char-thumb">
+                <img src="img/teacher.jpg" alt="The Teacher" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>The Teacher (Cartographer)</h3>
+                  <span class="char-role-badge">Teacher / Scientist (Cartographer)</span>
+                </div>
+                <p class="char-desc">A quiet scholar of the stars — his lessons spark curiosity beyond what can be seen.</p>
+                <p class="char-va-line">VA: Ryūnosuke Kaneda</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/mother.jpg" data-icon="🌸"
+                 data-name="Giovanni's Mother" data-role="Family" data-va="Yoshie Shimamura"
+                 data-desc="Giovanni's ailing mother who rests at home while he works nights at the print shop. Her quiet suffering anchors Giovanni's desire to prove his worth and earn a sense of belonging.">
+              <div class="char-thumb">
+                <img src="img/mother.jpg" alt="Giovanni's Mother" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Giovanni's Mother</h3>
+                  <span class="char-role-badge">Family</span>
+                </div>
+                <p class="char-desc">Giovanni's ailing mother — her quiet endurance motivates his long working nights.</p>
+                <p class="char-va-line">VA: Yoshie Shimamura</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/father.jpg" data-icon="⚓"
+                 data-name="Campanella's Father" data-role="Family" data-va="Gorō Naya"
+                 data-desc="Campanella's grieving father, whose quiet search by the riverbank closes the film with sorrow. His loss mirrors Giovanni's own — a shared weight neither can fully speak.">
+              <div class="char-thumb">
+                <img src="img/father.jpg" alt="Campanella's Father" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Campanella's Father</h3>
+                  <span class="char-role-badge">Family</span>
+                </div>
+                <p class="char-desc">A grieving father whose quiet presence at film's end deepens the weight of loss.</p>
+                <p class="char-va-line">VA: Gorō Naya</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/zanelli.jpg" data-icon="💧"
+                 data-name="Zanelli" data-role="Classmate" data-va="Junko Hori"
+                 data-desc="The classmate Campanella dives into the river to save. His rescue sets into motion the sacrifice that shapes the entire journey — a small, ordinary moment with immeasurable consequence.">
+              <div class="char-thumb">
+                <img src="img/zanelli.jpg" alt="Zanelli" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Zanelli</h3>
+                  <span class="char-role-badge">Classmate</span>
+                </div>
+                <p class="char-desc">The classmate whose drowning sets the whole tragedy in motion when Campanella dives in to save him.</p>
+                <p class="char-va-line">VA: Junko Hori</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/marceau.jpg" data-icon="🌙"
+                 data-name="Marceau" data-role="Classmate" data-va="Miyuki Ichijō"
+                 data-desc="A classmate of Giovanni and Campanella. Present during the festival, he represents the ordinary world of the town — the cheerful social life that Giovanni feels locked out of.">
+              <div class="char-thumb">
+                <img src="img/marceau.jpg" alt="Marceau" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Marceau</h3>
+                  <span class="char-role-badge">Classmate</span>
+                </div>
+                <p class="char-desc">A classmate who represents the ordinary town world Giovanni feels excluded from.</p>
+                <p class="char-va-line">VA: Miyuki Ichijō</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/lighthouse_keeper.jpg" data-icon="🔦"
+                 data-name="Lighthouse Keeper" data-role="Townsperson" data-va="Fujio Tokita"
+                 data-desc="A familiar presence near the river on the night of the festival. He watches over the water's edge — quietly witnessing the boundary between the living world and the cosmic.">
+              <div class="char-thumb">
+                <img src="img/lighthouse_keeper.jpg" alt="Lighthouse Keeper" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Lighthouse Keeper</h3>
+                  <span class="char-role-badge">Townsperson</span>
+                </div>
+                <p class="char-desc">A quiet guardian of the riverbank who watches over the boundary between worlds.</p>
+                <p class="char-va-line">VA: Fujio Tokita</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/store_owner.jpg" data-icon="🏪"
+                 data-name="Store Owner" data-role="Townsperson" data-va="Ryūji Saikachi"
+                 data-desc="A shopkeeper in Giovanni's town. A minor but grounding presence, part of the ordinary daily life that Giovanni moves through like a ghost — present but unseen by those around him.">
+              <div class="char-thumb">
+                <img src="img/store_owner.jpg" alt="Store Owner" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Store Owner</h3>
+                  <span class="char-role-badge">Townsperson</span>
+                </div>
+                <p class="char-desc">A shopkeeper who forms part of the ordinary town world Giovanni quietly drifts through.</p>
+                <p class="char-va-line">VA: Ryūji Saikachi</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/dairy_man.jpg" data-icon="🥛"
+                 data-name="Dairy Man" data-role="Townsperson" data-va="Seiji Kurazaki"
+                 data-desc="The dairyman from whom Giovanni picks up milk for his mother. A small, kind interaction that shows the modest texture of Giovanni's daily life before the cosmic journey begins.">
+              <div class="char-thumb">
+                <img src="img/dairy_man.jpg" alt="Dairy Man" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Dairy Man</h3>
+                  <span class="char-role-badge">Townsperson</span>
+                </div>
+                <p class="char-desc">A kind townsperson from whom Giovanni collects milk for his ailing mother.</p>
+                <p class="char-va-line">VA: Seiji Kurazaki</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/dairy_woman.jpg" data-icon="🌾"
+                 data-name="Dairy Woman" data-role="Townsperson" data-va="Manami Maruyama"
+                 data-desc="The dairy woman, part of the same humble household. She and the dairy man embody the quiet, hardworking community that forms the backdrop to Giovanni's lonely existence.">
+              <div class="char-thumb">
+                <img src="img/dairy_woman.jpg" alt="Dairy Woman" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Dairy Woman</h3>
+                  <span class="char-role-badge">Townsperson</span>
+                </div>
+                <p class="char-desc">Part of the dairy household — a quiet, grounding presence in the town's daily life.</p>
+                <p class="char-va-line">VA: Manami Maruyama</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Passengers ── -->
+        <div class="char-group" id="group-passengers">
+          <div class="char-list">
+
+            <div class="char-row" data-img="img/siblings.jpg" data-icon="✦"
+                 data-name="Tadashi &amp; Kaoru" data-role="Ship Passengers" data-va="Yuriko Fuchizaki / Kaori Nakahara"
+                 data-desc="Siblings rescued from a sunken ocean liner, traveling in calm acceptance toward the Southern Cross. Their journey reflects the peace that can come with embracing the inevitable with grace and mutual love.">
+              <div class="char-thumb">
+                <img src="img/siblings.jpg" alt="Tadashi and Kaoru" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Tadashi &amp; Kaoru</h3>
+                  <span class="char-role-badge">Ship Passengers</span>
+                </div>
+                <p class="char-desc">Orphaned siblings from a sunken ship, traveling together in peace toward the Southern Cross.</p>
+                <p class="char-va-line">VA: Yuriko Fuchizaki / Kaori Nakahara</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/youngman.jpg" data-icon="🌺"
+                 data-name="The Teacher" data-role="Guardian" data-va="Ryūnosuke Kaneda"
+                 data-desc="A guardian accompanying the orphaned children with steadfast compassion. Her calm presence offers comfort amid the unknown — love made quiet and steady, carrying the children gently onward.">
+              <div class="char-thumb">
+                <img src="img/youngman.jpg" alt="Young Man" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Young Man</h3>
+                  <span class="char-role-badge">Guardian</span>
+                </div>
+                <p class="char-desc">A steadfast guardian escorting the orphaned children — compassion made quiet and steady.</p>
+                <p class="char-va-line">VA: Hidehiro Kikuchi</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/birdcatcher.jpg" data-icon="🪶"
+                 data-name="The Bird Catcher" data-role="Wanderer" data-va="Chikao Ōtsuka"
+                 data-desc="A jovial wanderer who hunts herons along the cosmic river. He represents the earthly and sensory — a warm, grounding counterpoint to the film's spiritual gravity. His laughter fills the train with life.">
+              <div class="char-thumb">
+                <img src="img/birdcatcher.jpg" alt="The Bird Catcher" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>The Bird Catcher</h3>
+                  <span class="char-role-badge">Wanderer</span>
+                </div>
+                <p class="char-desc">A jolly wanderer hunting herons on the cosmic river — earthy warmth amid spiritual weight.</p>
+                <p class="char-va-line">VA: Chikao Ōtsuka</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/scholar.jpg" data-icon="🌸"
+                 data-name="The Teacher (Cartographer)" data-role="Teacher / Scientist (Cartographer)" data-va="Ryūnosuke Kaneda"
+                 data-desc="A thoughtful teacher who guides Giovanni and Campanella through lessons about the stars and the structure of the universe. As a celestial cartographer mapping the Milky Way, he represents knowledge without clear answers—a gentle presence that encourages wonder, reminding them that some truths are not meant to be fully understood, only felt.">
+              <div class="char-thumb">
+                <img src="img/scholar.jpg" alt="The Teacher" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>The Teacher (Cartographer)</h3>
+                  <span class="char-role-badge">Teacher / Scientist (Cartographer)</span>
+                </div>
+                <p class="char-desc">A quiet scholar of the stars — his lessons spark curiosity beyond what can be seen.</p>
+                <p class="char-va-line">VA: Ryūnosuke Kaneda</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/conductor.jpg" data-icon="🎫"
+                 data-name="The Conductor" data-role="Train Crew" data-va="Tetsuya Kaji"
+                 data-desc="The enigmatic conductor of the Galactic Railroad. He moves through the carriages with calm authority — a liminal figure operating the machinery between the living world and what lies beyond.">
+              <div class="char-thumb">
+                <img src="img/conductor.jpg" alt="The Conductor" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>The Conductor</h3>
+                  <span class="char-role-badge">Train Crew</span>
+                </div>
+                <p class="char-desc">The enigmatic conductor who moves through the train — a liminal figure between worlds.</p>
+                <p class="char-va-line">VA: Tetsuya Kaji</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/wireless_operator.jpg" data-icon="📡"
+                 data-name="Wireless Operator" data-role="Train Crew" data-va="Takeshi Aono"
+                 data-desc="Part of the train's unseen crew, transmitting signals through the cosmos. His presence underscores the strange, orderly bureaucracy that governs even the afterlife's railway system.">
+              <div class="char-thumb">
+                <img src="img/wireless_operator.jpg" alt="Wireless Operator" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Wireless Operator</h3>
+                  <span class="char-role-badge">Train Crew</span>
+                </div>
+                <p class="char-desc">Part of the unseen train crew — transmitting signals through the vast cosmic railway.</p>
+                <p class="char-va-line">VA: Takeshi Aono</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+            <div class="char-row" data-img="img/old_woman.png" data-icon="🌠"
+                 data-name="Old Woman" data-role="Passenger" data-va="Reiko Niimura"
+                 data-desc="An elderly passenger aboard the train. Her quiet presence among the travellers speaks to the universality of the journey — all ages, all lives, all finding their way through the stars.">
+              <div class="char-thumb">
+                <img src="img/old_woman.png" alt="Old Woman" onerror="this.style.display='none';" />
+              </div>
+              <div class="char-info">
+                <div class="char-info-header">
+                  <h3>Old Woman</h3>
+                  <span class="char-role-badge">Passenger</span>
+                </div>
+                <p class="char-desc">An elderly traveller whose presence speaks to the universality of the cosmic journey.</p>
+                <p class="char-va-line">VA: Reiko Niimura</p>
+              </div>
+              <span class="char-row-arrow">→</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Character Image Modal -->
+    <div class="char-modal-overlay" id="char-modal" role="dialog" aria-modal="true">
+      <div class="char-modal-box">
+        <button class="char-modal-close" id="char-modal-close" aria-label="Close">✕</button>
+        <div class="char-modal-img-wrap" id="char-modal-img-wrap">
+          <img id="char-modal-img" src="" alt="" style="display:none;" />
+          <div class="char-modal-img-fallback" id="char-modal-fallback" style="display:none;"></div>
+        </div>
+        <div class="char-modal-body">
+          <h3 id="char-modal-name"></h3>
+          <p class="char-modal-role" id="char-modal-role"></p>
+          <p class="char-modal-va" id="char-modal-va"><span>VA: </span><span id="char-modal-va-name"></span></p>
+          <p id="char-modal-desc"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+      <div class="container">
+        <p class="section-label">✦ Gallery</p>
+        <h2>Gallery</h2>
+        <p>Click any image to view it full size.</p>
+
+        <!-- Gallery grid: 35 images, paginated 15 per page -->
+        <div class="gallery-grid" id="gallery-grid">
+
+          <div class="gal-item" data-src="img/gal1.png" data-index="0">
+            <img src="img/gal1.png" alt="Gallery image 1"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal2.png" data-index="1">
+            <img src="img/gal2.png" alt="Gallery image 2"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal3.png" data-index="2">
+            <img src="img/gal3.png" alt="Gallery image 3"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal4.png" data-index="3">
+            <img src="img/gal4.png" alt="Gallery image 4"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal5.png" data-index="4">
+            <img src="img/gal5.png" alt="Gallery image 5"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal6.png" data-index="5">
+            <img src="img/gal6.png" alt="Gallery image 6"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#5B52A3,#EEEDF3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal7.png" data-index="6">
+            <img src="img/gal7.png" alt="Gallery image 7"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal8.png" data-index="7">
+            <img src="img/gal8.png" alt="Gallery image 8"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal9.png" data-index="8">
+            <img src="img/gal9.png" alt="Gallery image 9"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal10.png" data-index="9">
+            <img src="img/gal10.png" alt="Gallery image 10"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#2A1F5E)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal11.png" data-index="10">
+            <img src="img/gal11.png" alt="Gallery image 11"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal12.png" data-index="11">
+            <img src="img/gal12.png" alt="Gallery image 12"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal13.png" data-index="12">
+            <img src="img/gal13.png" alt="Gallery image 13"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal14.png" data-index="13">
+            <img src="img/gal14.png" alt="Gallery image 14"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal15.png" data-index="14">
+            <img src="img/gal15.png" alt="Gallery image 15"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal16.png" data-index="15">
+            <img src="img/gal16.png" alt="Gallery image 16"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#5B52A3,#EEEDF3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal17.png" data-index="16">
+            <img src="img/gal17.png" alt="Gallery image 17"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal18.png" data-index="17">
+            <img src="img/gal18.png" alt="Gallery image 18"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal19.png" data-index="18">
+            <img src="img/gal19.png" alt="Gallery image 19"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal20.png" data-index="19">
+            <img src="img/gal20.png" alt="Gallery image 20"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#2A1F5E)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal21.png" data-index="20">
+            <img src="img/gal21.png" alt="Gallery image 21"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal22.png" data-index="21">
+            <img src="img/gal22.png" alt="Gallery image 22"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal23.png" data-index="22">
+            <img src="img/gal23.png" alt="Gallery image 23"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal24.png" data-index="23">
+            <img src="img/gal24.png" alt="Gallery image 24"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal25.png" data-index="24">
+            <img src="img/gal25.png" alt="Gallery image 25"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal26.png" data-index="25">
+            <img src="img/gal26.png" alt="Gallery image 26"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#5B52A3,#EEEDF3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal27.png" data-index="26">
+            <img src="img/gal27.png" alt="Gallery image 27"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal28.png" data-index="27">
+            <img src="img/gal28.png" alt="Gallery image 28"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal29.png" data-index="28">
+            <img src="img/gal29.png" alt="Gallery image 29"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal30.png" data-index="29">
+            <img src="img/gal30.png" alt="Gallery image 30"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#2A1F5E)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal31.png" data-index="30">
+            <img src="img/gal31.png" alt="Gallery image 31"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#5B52A3)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal32.png" data-index="31">
+            <img src="img/gal32.png" alt="Gallery image 32"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#13112A,#9DA4CF)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal33.png" data-index="32">
+            <img src="img/gal33.png" alt="Gallery image 33"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#2A1F5E,#C93261)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal34.png" data-index="33">
+            <img src="img/gal34.png" alt="Gallery image 34"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#C93261,#F5D060)'; this.style.display='none';" />
+          </div>
+
+          <div class="gal-item" data-src="img/gal35.png" data-index="34">
+            <img src="img/gal35.png" alt="Gallery image 35"
+                 onerror="this.parentElement.style.background='linear-gradient(135deg,#1E1C3A,#F5D060)'; this.style.display='none';" />
+          </div>
+
+        </div>
+
+        <!-- Pagination controls -->
+        <div class="gallery-pagination" id="gallery-pagination"></div>
+
+      </div>
+    </section>
+    <section id="trailer">
+      <div class="container">
+        <p class="section-label">✦ Watch</p>
+        <h2>Movie Trailer</h2>
+        <p>Experience the ethereal visuals and haunting score of Night on the Galactic Railroad.</p>
+
+        <!--
+          The iframe is intentionally NOT here on page load.
+          JS injects it only when the user clicks the play button,
+          which is the only reliable way to prevent autoplay.
+        -->
+        <div class="trailer-wrap trailer-facade" id="trailer-wrap">
+          <!-- Thumbnail — replace src with your own poster if you have one -->
+          <img
+            class="trailer-thumb"
+            src="char/cover.jpg"
+            alt="Night on the Galactic Railroad trailer thumbnail"
+            onerror="this.style.opacity='0';"
+          />
+          <div class="trailer-play-btn"></div>
+          <span class="trailer-label">Click to play trailer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews">
+      <div class="container">
+        <p class="section-label">✦ Reviews</p>
+        <h2>Leave a Review</h2>
+        <p>Share your thoughts on this celestial journey. Your review will appear below.</p>
+
+        <div class="review-form-wrap">
+          <div class="form-group">
+            <label for="reviewer-name">Your Name</label>
+            <input type="text" id="reviewer-name" placeholder="e.g. Giovanni" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label for="movie-title">Movie Title</label>
+            <input type="text" id="movie-title" value="Night on the Galactic Railroad" />
+          </div>
+
+          <div class="form-group">
+            <label>Your Rating</label>
+            <!-- Star rating: reversed order trick using flex-direction -->
+            <div class="star-select" id="star-rating">
+              <div class="star-option">
+                <input type="radio" name="rating" id="s1" value="1" />
+                <label for="s1" title="1 star">★</label>
+              </div>
+              <div class="star-option">
+                <input type="radio" name="rating" id="s2" value="2" />
+                <label for="s2" title="2 stars">★</label>
+              </div>
+              <div class="star-option">
+                <input type="radio" name="rating" id="s3" value="3" />
+                <label for="s3" title="3 stars">★</label>
+              </div>
+              <div class="star-option">
+                <input type="radio" name="rating" id="s4" value="4" />
+                <label for="s4" title="4 stars">★</label>
+              </div>
+              <div class="star-option">
+                <input type="radio" name="rating" id="s5" value="5" />
+                <label for="s5" title="5 stars">★</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="review-text">Your Review</label>
+            <textarea id="review-text" placeholder="What did this film mean to you? What will you carry from this journey?"></textarea>
+          </div>
+
+          <button class="btn-submit" id="submit-review">Submit Review ✦</button>
+        </div>
+
+        <!-- Dynamic review output -->
+        <div id="reviews-list"></div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-constellation">✦ ✧ ✦ ✧ ✦</div>
+      <div class="footer-logo">Night on the Galactic Railroad</div>
+      <p class="footer-text">
+        A tribute to the 1985 film directed by Gisaburō Sugii &nbsp;·&nbsp;
+        Based on the novel by <em>Kenji Miyazawa</em> &nbsp;·&nbsp;
+        Fan showcase — not affiliated with Group TAC
+      </p>
+      <p class="footer-text" style="margin-top: 0.5rem;">
+        &copy; 2025 &nbsp;·&nbsp; Crafted with stardust &nbsp;✦
+      </p>
+    </div>
+  </footer>
+
+  <!-- Lightbox — full-image viewer (opened by clicking gallery tiles) -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox-close" id="lb-close" aria-label="Close">✕</button>
+    <button class="lightbox-arrow prev" id="lb-prev" aria-label="Previous image">‹</button>
+    <img class="lightbox-img" id="lb-img" src="" alt="Gallery image" />
+    <button class="lightbox-arrow next" id="lb-next" aria-label="Next image">›</button>
+    <span class="lightbox-counter" id="lb-counter"></span>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    /*
+    ================================================================
+      JAVASCRIPT TABLE OF CONTENTS
+    ================================================================
+      JS-1.  STAR FIELD         — animated canvas background
+      JS-2.  SHOW MORE / LESS   — plot text expand/collapse toggle
+      JS-3.  BACK TO TOP        — floating scroll-up button
+      JS-4.  TRAILER FACADE     — inject iframe only on click (prevents autoplay)
+      JS-5.  GALLERY LIGHTBOX  — full-image viewer with prev/next nav
+      JS-6.  STAR RATING        — interactive ★ highlight on click
+      JS-6.  REVIEW FORM        — submit & display user reviews
+    ================================================================
+    */
+
+
+    /* --- JS-1. Star Field --- */
+    (function() {
+      const canvas = document.getElementById('star-canvas');
+      const ctx    = canvas.getContext('2d');
+      let stars    = [];
+      let W, H;
+
+      /* Set canvas dimensions to match the viewport */
+      function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      /* Populate star array — density: 1 star per ~3500px² */
+      function initStars() {
+        stars = [];
+        const count = Math.floor((W * H) / 3500);
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x:     Math.random() * W,
+            y:     Math.random() * H,
+            r:     Math.random() * 1.4 + 0.2,          /* radius 0.2–1.6 */
+            alpha: Math.random(),                        /* current opacity */
+            delta: (Math.random() * 0.005 + 0.001)      /* fade speed */
+                   * (Math.random() < 0.5 ? 1 : -1),    /* random direction */
+            color: ['#EEEDF3','#9DA4CF','#F5D060','#C93261'][Math.floor(Math.random()*4)]
+          });
+        }
+      }
+
+      /* Animation loop — called every frame via rAF */
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        stars.forEach(s => {
+          s.alpha += s.delta;
+          if (s.alpha > 1 || s.alpha < 0) s.delta *= -1; /* reverse fade direction at limits */
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = Math.max(0, Math.min(1, s.alpha));
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1; /* reset global alpha after drawing */
+        requestAnimationFrame(draw);
+      }
+
+      /* Re-init on window resize to keep stars filling the screen */
+      window.addEventListener('resize', () => { resize(); initStars(); });
+      resize();
+      initStars();
+      draw();
+    })();
+
+
+    /* --- JS-2. Show More/Less --- */
+    (function() {
+      const btn  = document.getElementById('toggle-themes');  /* toggle button */
+      const more = document.getElementById('theme-more');     /* hidden content */
+
+      btn.addEventListener('click', () => {
+        const isVisible = more.classList.toggle('visible');
+        btn.textContent = isVisible ? 'Show Less ↑' : 'Show More ↓';
+      });
+    })();
+
+
+    /* --- JS-3. Back to Top --- */
+    (function() {
+      const btn = document.getElementById('back-top');
+
+      /* Show/hide button based on scroll position */
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      });
+
+      /* Smooth scroll to top on click */
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+
+
+    /* --- JS-4. Trailer Facade ---
+       The iframe is never in the HTML on load — this is the ONLY
+       reliable fix for third-party embeds that ignore autoplay=0.
+       When the user clicks the play button:
+         1. Remove the thumbnail / play button facade
+         2. Inject the real <iframe> into .trailer-wrap
+         3. Append ?autoplay=1 so it starts playing immediately after click
+    ---------------------------------------------------------------- */
+    (function() {
+      const wrap = document.getElementById('trailer-wrap');
+      if (!wrap) return;
+
+      const VIDEO_URL = 'https://www.dailymotion.com/embed/video/x8hs7y4?autoplay=1';
+
+      wrap.addEventListener('click', function onFirstClick() {
+        /* Remove this listener so it only fires once */
+        wrap.removeEventListener('click', onFirstClick);
+
+        /* Clear the facade contents (thumbnail, play btn, label) */
+        wrap.innerHTML = '';
+
+        /* Remove the facade class so the ::after overlay is gone */
+        wrap.classList.remove('trailer-facade');
+
+        /* Inject the iframe — autoplay=1 is fine HERE because
+           the user explicitly clicked, satisfying browser autoplay policy */
+        const iframe = document.createElement('iframe');
+        iframe.src         = VIDEO_URL;
+        iframe.title       = 'Night on the Galactic Railroad — Official Trailer 1985';
+        iframe.allow       = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        wrap.appendChild(iframe);
+      });
+    })();
+
+
+    /* --- JS-5. Gallery Pagination + Lightbox --- */
+    (function() {
+      const PER_PAGE   = 15;
+      const grid       = document.getElementById('gallery-grid');
+      const pagination = document.getElementById('gallery-pagination');
+      const overlay    = document.getElementById('lightbox');
+      const lbImg      = document.getElementById('lb-img');
+      const lbClose    = document.getElementById('lb-close');
+      const lbPrev     = document.getElementById('lb-prev');
+      const lbNext     = document.getElementById('lb-next');
+      const lbCounter  = document.getElementById('lb-counter');
+
+      const allItems   = Array.from(grid.querySelectorAll('.gal-item'));
+      const allSrcs    = allItems.map(el => el.dataset.src);
+      const totalPages = Math.ceil(allItems.length / PER_PAGE);
+      let currentPage  = 1;
+      let lbCurrent    = 0;
+
+      /* ── Pagination ── */
+      function showPage(page) {
+        currentPage = Math.max(1, Math.min(page, totalPages));
+        const start = (currentPage - 1) * PER_PAGE;
+        const end   = start + PER_PAGE;
+        allItems.forEach((item, i) => {
+          item.style.display = (i >= start && i < end) ? '' : 'none';
+        });
+        buildPagination();
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function buildPagination() {
+        pagination.innerHTML = '';
+
+        const prev = document.createElement('button');
+        prev.className = 'gal-page-btn arrow';
+        prev.textContent = '←';
+        prev.disabled = currentPage === 1;
+        prev.addEventListener('click', () => showPage(currentPage - 1));
+        pagination.appendChild(prev);
+
+        for (let p = 1; p <= totalPages; p++) {
+          const btn = document.createElement('button');
+          btn.className = 'gal-page-btn' + (p === currentPage ? ' active' : '');
+          btn.textContent = p;
+          btn.addEventListener('click', () => showPage(p));
+          pagination.appendChild(btn);
+        }
+
+        const info = document.createElement('span');
+        info.className = 'gal-page-info';
+        info.textContent = `${currentPage} / ${totalPages}`;
+        pagination.appendChild(info);
+
+        const next = document.createElement('button');
+        next.className = 'gal-page-btn arrow';
+        next.textContent = '→';
+        next.disabled = currentPage === totalPages;
+        next.addEventListener('click', () => showPage(currentPage + 1));
+        pagination.appendChild(next);
+      }
+
+      /* Init — show page 1 */
+      showPage(1);
+
+      /* ── Lightbox ── */
+      function showImage(idx) {
+        lbCurrent = (idx + allSrcs.length) % allSrcs.length;
+        lbImg.src = allSrcs[lbCurrent];
+        lbImg.alt = `Gallery image ${lbCurrent + 1}`;
+        lbCounter.textContent = `${lbCurrent + 1} / ${allSrcs.length}`;
+      }
+
+      function openLightbox(idx) {
+        showImage(idx);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+
+      allItems.forEach((item, i) => {
+        item.addEventListener('click', () => openLightbox(i));
+      });
+
+      lbPrev.addEventListener('click', e => { e.stopPropagation(); showImage(lbCurrent - 1); });
+      lbNext.addEventListener('click', e => { e.stopPropagation(); showImage(lbCurrent + 1); });
+
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
+      lbClose.addEventListener('click', closeLightbox);
+
+      document.addEventListener('keydown', e => {
+        if (!overlay.classList.contains('open')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  showImage(lbCurrent - 1);
+        if (e.key === 'ArrowRight') showImage(lbCurrent + 1);
+      });
+    })();
+
+
+    /* --- JS-5. Star Rating --- */
+    var _selectedStarVal = 0; /* shared state: read by the review form (JS-6) */
+    (function() {
+      const starsWrap = document.getElementById('star-rating');
+      const labels    = Array.from(starsWrap.querySelectorAll('.star-option label'));
+
+      /* Highlight stars 0..upTo-1, clear the rest */
+      function setHighlight(upTo) {
+        labels.forEach((lbl, i) => {
+          lbl.classList.toggle('active', i < upTo);
+        });
+      }
+
+      labels.forEach((lbl, i) => {
+        lbl.addEventListener('mouseenter', () => setHighlight(i + 1));          /* hover preview */
+        lbl.addEventListener('mouseleave', () => setHighlight(_selectedStarVal)); /* revert */
+        lbl.addEventListener('click', () => {
+          _selectedStarVal = i + 1;                                             /* persist choice */
+          const radio = starsWrap.querySelectorAll('input[type="radio"]')[i];   /* sync radio */
+          if (radio) radio.checked = true;
+          setHighlight(_selectedStarVal);
+        });
+      });
+    })();
+
+
+    /* --- JS-6. Review Form --- */
+    (function() {
+      const submitBtn   = document.getElementById('submit-review');
+      const reviewsList = document.getElementById('reviews-list');
+
+      submitBtn.addEventListener('click', () => {
+        /* Read and trim all form values */
+        const name     = document.getElementById('reviewer-name').value.trim();
+        const title    = document.getElementById('movie-title').value.trim();
+        const ratingEl = document.querySelector('input[name="rating"]:checked');
+        const text     = document.getElementById('review-text').value.trim();
+
+        /* Validation — name and review text are required */
+        if (!name) { alert('Please enter your name.'); return; }
+        if (!text) { alert('Please write a review.'); return; }
+
+        /* Build star display string e.g. "★★★☆☆" */
+        const ratingVal = _selectedStarVal || 0;
+        const stars = '★'.repeat(ratingVal) + '☆'.repeat(5 - ratingVal);
+
+        /* Create and populate review card element */
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        card.innerHTML = `
+          <div class="review-header">
+            <span class="reviewer-name">${escapeHtml(name)}</span>
+            <span class="review-stars">${stars}</span>
+          </div>
+          <div class="review-movie-title">on: ${escapeHtml(title || 'Night on the Galactic Railroad')}</div>
+          <p class="review-text">${escapeHtml(text)}</p>
+        `;
+
+        /* Prepend so newest reviews appear at the top */
+        reviewsList.prepend(card);
+
+        /* Reset all form fields and star state */
+        document.getElementById('reviewer-name').value = '';
+        document.getElementById('review-text').value = '';
+        if (ratingEl) ratingEl.checked = false;
+        _selectedStarVal = 0;
+        document.querySelectorAll('#star-rating .star-option label').forEach(l => l.classList.remove('active'));
+        document.getElementById('movie-title').value = 'Night on the Galactic Railroad';
+
+        /* Scroll the new card into view */
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      /* Sanitize user text before inserting into innerHTML */
+      function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+      }
+    })();
+
+
+
+
+    /* --- JS-7. Character Tabs --- */
+    (function() {
+      const tabBtns = document.querySelectorAll('.char-tab-btn');
+      const groups  = document.querySelectorAll('.char-group');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.group;
+          tabBtns.forEach(b => b.classList.remove('active'));
+          groups.forEach(g => g.classList.remove('active'));
+          btn.classList.add('active');
+          const group = document.getElementById('group-' + target);
+          if (group) group.classList.add('active');
+        });
+      });
+    })();
+
+
+    /* --- JS-8. Character Modal --- */
+    (function() {
+      const overlay   = document.getElementById('char-modal');
+      const closeBtn  = document.getElementById('char-modal-close');
+      const modalImg  = document.getElementById('char-modal-img');
+      const modalFb   = document.getElementById('char-modal-fallback');
+      const modalName   = document.getElementById('char-modal-name');
+      const modalRole   = document.getElementById('char-modal-role');
+      const modalVaName = document.getElementById('char-modal-va-name');
+      const modalDesc   = document.getElementById('char-modal-desc');
+
+      document.querySelectorAll('.char-row').forEach(row => {
+        row.addEventListener('click', () => {
+          const img  = row.dataset.img;
+          const icon = row.dataset.icon;
+          const name = row.dataset.name;
+          const role = row.dataset.role;
+          const va   = row.dataset.va;
+          const desc = row.dataset.desc;
+
+          modalImg.onload = () => {
+            modalImg.style.display = 'block';
+            modalFb.style.display  = 'none';
+          };
+          modalImg.onerror = () => {
+            modalImg.style.display = 'none';
+            modalFb.style.display  = 'block';
+            /* no fallback text */;
+          };
+          modalFb.style.display = 'none';
+          modalImg.src = img;
+          modalImg.alt = name;
+
+          modalName.textContent   = name;
+          modalRole.textContent   = role;
+          modalVaName.textContent = va || '—';
+          modalDesc.textContent   = desc;
+
+          overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeCharModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        modalImg.src = '';
+      }
+
+      closeBtn.addEventListener('click', closeCharModal);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeCharModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCharModal(); });
+    })();
+
+  </script>
+
+</body>
+</html>
